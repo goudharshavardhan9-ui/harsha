@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Harsha V — Web Developer</title>
+  <meta name="description" content="Portfolio — Harsha Vardhan Goud | Web Developer. Projects, skills, contact." />
+  <meta name="keywords" content="web developer, frontend, react, accessibility, performance, portfolio" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <link rel="alternate" type="application/rss+xml" title="Harsha V RSS" href="/rss.xml">
+  <style>
+    /* --- Theme variables (light/dark) --- */
+    :root{
+      --bg:#000000; --card:#0b1220; --muted:#9aa4b2; --accent:#7c3aed; --glass: rgba(255,255,255,0.04);
+      --maxw:1100px; --radius:14px; --text:#e6eef6; --accent-2:#3b82f6; --success:#10b981;
+    }
+    [data-theme="light"]{
+      --bg: #f6f8fb; --card:#ffffff; --muted:#4b5563; --accent:#7c3aed; --glass: rgba(2,6,23,0.04); --text:#0b1220; --accent-2:#2563eb; --success:#059669;
+    }
+
+    /* --- Reset & base --- */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:#000000;color:var(--text);
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      line-height:1.45;padding:32px;display:flex;justify-content:center;transition:background .25s ease,color .25s ease
+    }
+    .wrap{width:100%;max-width:var(--maxw)}
+
+    /* --- Header / Hero --- */
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    h1{margin:0;font-size:clamp(20px,3.2vw,28px)}
+    p.lead{margin:6px 0 0;color:var(--muted);font-size:14px}
+    nav{display:flex;gap:10px;align-items:center}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:inherit;text-decoration:none;font-size:14px;display:inline-flex;gap:8px;align-items:center}
+
+    /* --- Hero card --- */
+    .hero{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:28px;border-radius:var(--radius);display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:center}
+    .intro h2{margin:0 0 6px;font-size:22px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .chip{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
+    .photo{height:180px;border-radius:12px;background:linear-gradient(135deg,#10203a,#0d1530);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)}
+
+    /* --- Sections --- */
+    section{margin-top:20px}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .card{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);transition:transform .18s ease,box-shadow .18s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 8px 30px rgba(2,6,23,0.5)}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .meta{display:flex;justify-content:space-between;margin-top:12px;font-size:13px;color:var(--muted)}
+
+    /* --- Filters / Search --- */
+    .controls{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+    .search{flex:1;display:flex}
+    .search input{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text)}
+    .tabs{display:flex;gap:8px}
+
+    /* --- Testimonials carousel --- */
+    .carousel{display:flex;gap:12px;overflow:hidden}
+    .testimonial{min-width:260px}
+
+    /* --- Contact form --- */
+    form label{display:block;font-size:13px;margin-bottom:6px}
+    form input,form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text)}
+    form .row{align-items:flex-start}
+
+    /* --- Footer / Contact --- */
+    footer{display:flex;justify-content:space-between;align-items:center;margin-top:28px;color:var(--muted);font-size:14px}
+
+    /* --- Modal --- */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:24px}
+    .modal{background:linear-gradient(180deg,#071027, #08111b);padding:18px;border-radius:12px;width:100%;max-width:720px;border:1px solid rgba(255,255,255,0.04)}
+
+    /* --- Responsive --- */
+    @media (max-width:800px){
+      .hero{grid-template-columns:1fr}
+      nav{display:none}
+    }
+
+    /* --- Utility --- */
+    .muted{color:var(--muted)}
+    .kbd{background:#071122;border:1px solid rgba(255,255,255,0.03);padding:4px 8px;border-radius:6px;font-size:13px}
+    .row{display:flex;gap:12px;align-items:center}
+    a.link{color:var(--accent);text-decoration:none}
+
+    /* accessible focus */
+    a:focus,button:focus,input:focus,textarea:focus{outline:3px solid rgba(124,58,237,0.18);outline-offset:3px}
+
+    /* small animation */
+    @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .animate{animation:slideIn .36s ease both}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="root" data-theme="dark">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">HV</div>
+        <div>
+          <h1>Harsha Vardhan Goud</h1>
+          <p class="lead">Frontend developer — building accessible, fast & delightful web apps</p>
+        </div>
+      </div>
+
+      <nav aria-label="Primary navigation">
+        <a class="btn" href="#projects">Projects</a>
+        <a class="btn" href="#skills">Skills</a>
+        <a class="btn" href="#contact">Contact</a>
+        <button id="themeToggle" class="btn" aria-pressed="false" title="Toggle theme">Theme</button>
+        <a class="btn" href="/Harsha_V_Resume.pdf" download>Resume</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="intro">
+        <div class="intro">
+          <h2 id="intro">Hi — I'm Harsha. I make frontends that feel crisp.</h2>
+          <p class="muted">I specialize in React, accessible UI, performance tuning, and small-team product engineering. I enjoy turning messy requirements into well-tested user experiences.</p>
+
+          <div class="tags" role="list">
+            <span class="chip" role="listitem">HTML & CSS</span>
+            <span class="chip" role="listitem">JavaScript (ES6+)</span>
+            <span class="chip" role="listitem">React & Next.js</span>
+            <span class="chip" role="listitem">TypeScript</span>
+            <span class="chip" role="listitem">Vite / Webpack</span>
+          </div>
+
+          <div style="margin-top:16px" class="row">
+            <a class="btn" href="#projects">See projects</a>
+            <a class="btn" href="mailto:harsha@example.com">Email me</a>
+            <a class="btn" href="#blog">Blog</a>
+          </div>
+
+          <p class="muted" style="margin-top:14px;font-size:13px">Tip: press <span class="kbd">/</span> to focus search; press <span class="kbd">T</span> to toggle theme.</p>
+        </div>
+
+        <aside class="photo" aria-hidden="true">
+          <div style="text-align:center">
+            <svg width="120" height="120" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="48" height="48" rx="8" fill="url(#g)" />
+              <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs>
+            </svg>
+            <div class="muted" style="margin-top:10px;font-size:13px">Frontend • Accessibility • Performance</div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Projects with filters + lazy images -->
+      <section id="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title" style="margin-bottom:10px">Selected projects</h2>
+
+        <div class="controls">
+          <div class="search"><input id="projectSearch" placeholder="Search projects (press /)" aria-label="Search projects" /></div>
+          <div class="tabs">
+            <button class="btn" data-filter="all">All</button>
+            <button class="btn" data-filter="frontend">Frontend</button>
+            <button class="btn" data-filter="pwa">PWA</button>
+            <button class="btn" data-filter="design">Design System</button>
+          </div>
+        </div>
+
+        <div id="projectsGrid" class="cards" aria-live="polite"></div>
+      </section>
+
+      <!-- Testimonials -->
+      <section id="testimonials" aria-labelledby="testimonials-title">
+        <h2 id="testimonials-title" style="margin-bottom:10px">What people say</h2>
+        <div class="carousel" id="carousel"></div>
+      </section>
+
+      <!-- Blog + RSS -->
+      <section id="blog" aria-labelledby="blog-title">
+        <h2 id="blog-title" style="margin-bottom:10px">Latest posts</h2>
+        <div id="posts" class="cards"></div>
+        <p class="muted" style="margin-top:8px">Subscribe: <a class="link" href="/rss.xml">RSS</a></p>
+      </section>
+
+      <section id="skills" aria-labelledby="skills-title">
+        <h2 id="skills-title" style="margin-bottom:10px">Skills & Tools</h2>
+        <div class="cards">
+          <div class="card"><h3>Languages</h3><p class="muted">HTML, CSS, JavaScript, TypeScript</p></div>
+          <div class="card"><h3>Frameworks</h3><p class="muted">React, Next.js, Node.js</p></div>
+          <div class="card"><h3>Quality</h3><p class="muted">Jest, Testing Library, Playwright, ESLint, Prettier</p></div>
+          <div class="card"><h3>Deployment</h3><p class="muted">Vercel, Netlify, Docker, GitHub Actions</p></div>
+        </div>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title" style="margin-bottom:10px">Contact</h2>
+        <div class="card" style="display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+          <div style="flex:1;min-width:240px">
+            <p style="margin:0">Interested in working together or want a code review? Send a short message.</p>
+            <p class="muted" style="margin-top:8px">Email: <a class="link" href="mailto:harsha@example.com">harsha@example.com</a></p>
+          </div>
+
+          <form id="contactForm" style="flex:1;min-width:300px;max-width:520px" aria-label="Contact form">
+            <label for="name">Name</label>
+            <input id="name" name="name" required />
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            <div class="row" style="margin-top:10px">
+              <button type="submit" class="btn">Send</button>
+              <div id="formStatus" class="muted" style="align-self:center"></div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>Built with ❤️ — Harsha V</div>
+      <div class="muted">• <a class="link" href="#projects">Projects</a> • <a class="link" href="#contact">Contact</a></div>
+    </footer>
+  </div>
+
+  <!-- Modal template -->
+  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <button id="closeModal" class="btn" style="float:right">Close</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // ----- Data (example/fake) -----
+    const PROJECTS = [
+      {id:'atlas',title:'Project Atlas — Design System',desc:'Token-driven design system. Storybook + TypeScript.',tags:['design']},
+      {id:'quickcart',title:'QuickCart — PWA',desc:'Offline-capable shopping PWA with image optimizations.',tags:['pwa','frontend']},
+      {id:'metrics',title:'Metrics — Dashboard',desc:'Real-time dashboard with virtualized lists.',tags:['frontend']},
+      {id:'portfolio',title:'This portfolio',desc:'Accessible, performant, single-file demo with theme toggle.',tags:['frontend','design']}
+    ];
+
+    const POSTS = [
+      {id:'post1',title:'Optimizing images for the modern web',date:'2025-08-12',summary:'How I reduced image bytes by 60% across a storefront.'},
+      {id:'post2',title:'Design tokens in practice',date:'2025-05-03',summary:'A pragmatic guide to token-driven theming.'}
+    ];
+
+    const TESTIMONIALS = [
+      {author:'Priya K, PM',text:'Harsha turned an ambiguous brief into a polished, shipping product — fast.'},
+      {author:'Ravi S, CTO',text:'Excellent ownership and attention to UX/accessibility.'}
+    ];
+
+    // ----- Utilities -----
+    const root = document.getElementById('root');
+    function renderProjects(list){
+      const grid = document.getElementById('projectsGrid');
+      grid.innerHTML = '';
+      list.forEach(p=>{
+        const el = document.createElement('article');
+        el.className = 'card animate';
+        el.tabIndex = 0;
+        el.innerHTML = `<h3>${p.title}</h3><p class="muted">${p.desc}</p><div class="meta"><span class="muted">${p.tags.join(', ')}</span><button class="btn" data-id="${p.id}">Details</button></div>`;
+        grid.appendChild(el);
+      });
+    }
+
+    function renderPosts(){
+      const out = document.getElementById('posts');
+      out.innerHTML = '';
+      POSTS.forEach(post=>{
+        const d = document.createElement('article'); d.className='card';
+        d.innerHTML = `<h3>${post.title}</h3><p class="muted">${post.summary}</p><div class="meta"><span>${post.date}</span><a class="btn" href="#">Read</a></div>`;
+        out.appendChild(d);
+      });
+    }
+
+    function renderTestimonials(){
+      const c = document.getElementById('carousel'); c.innerHTML='';
+      TESTIMONIALS.forEach(t=>{
+        const e = document.createElement('blockquote'); e.className='card testimonial';
+        e.innerHTML = `<p>"${t.text}"</p><footer class="muted">— ${t.author}</footer>`;
+        c.appendChild(e);
+      });
+    }
+
+    // ----- Filtering & Search -----
+    document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click', (e)=>{
+      const f = e.target.dataset.filter;
+      const filtered = f === 'all' ? PROJECTS : PROJECTS.filter(p=>p.tags.includes(f));
+      renderProjects(filtered);
+    }));
+
+    document.getElementById('projectSearch').addEventListener('input', (e)=>{
+      const q = e.target.value.toLowerCase().trim();
+      renderProjects(PROJECTS.filter(p=>p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)));
+    });
+
+    // Open modal on details
+    document.addEventListener('click', (e)=>{
+      if(e.target.matches('.card .btn')){
+        const id = e.target.dataset.id;
+        const p = PROJECTS.find(x=>x.id===id);
+        if(!p) return;
+        document.getElementById('modalContent').innerHTML = `<h3>${p.title}</h3><p class="muted">${p.desc}</p><p>Tags: ${p.tags.join(', ')}</p>`;
+        document.getElementById('modalBackdrop').style.display = 'flex';
+        document.getElementById('modalBackdrop').setAttribute('aria-hidden','false');
+      }
+    });
+
+    // ----- Forms (client-only, with mailto fallback) -----
+    document.getElementById('contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name || !email || !message){ document.getElementById('formStatus').textContent = 'Please complete all fields.'; return; }
+      // Mailto fallback — opens user's email client
+      const subject = encodeURIComponent('Portfolio contact from ' + name);
+      const body = encodeURIComponent(message + '
+
+' + name + '
+' + email);
+      window.location.href = `mailto:harsha@example.com?subject=${subject}&body=${body}`;
+      document.getElementById('formStatus').textContent = 'Opening email client...';
+    });
+
+    // ----- Theme toggle with persistent storage -----
+    const themeBtn = document.getElementById('themeToggle');
+    function applyTheme(t){ root.setAttribute('data-theme', t); themeBtn.setAttribute('aria-pressed', t==='light'); localStorage.setItem('theme', t); }
+    themeBtn.addEventListener('click', ()=> applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    // keyboard shortcut: T => toggle theme
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'T' || e.key === 't') { themeBtn.click(); } if(e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA'){ e.preventDefault(); document.getElementById('projectSearch').focus(); } });
+    const saved = localStorage.getItem('theme');
+    if(saved) applyTheme(saved); else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) applyTheme('light');
+
+    // ----- Lazy load / performance hints (simple) -----
+    // In a real site you'd use <img loading="lazy"> and optimized formats
+
+    // ----- Initial render -----
+    renderProjects(PROJECTS);
+    renderPosts();
+    renderTestimonials();
+
+    // ----- Minimal analytics stub (no external calls) -----
+    function track(evt, props={}){ console.log('ANALYTICS', evt, props); }
+    document.querySelectorAll('.card button').forEach(b=>b.addEventListener('click', ()=>track('open_project')));
+
+    // Accessibility: close modal
+    document.getElementById('closeModal').addEventListener('click', ()=>{ document.getElementById('modalBackdrop').style.display = 'none'; document.getElementById('modalBackdrop').setAttribute('aria-hidden','true'); });
+    document.getElementById('modalBackdrop').addEventListener('click', (e)=>{ if(e.target === document.getElementById('modalBackdrop')){ document.getElementById('modalBackdrop').style.display = 'none'; document.getElementById('modalBackdrop').setAttribute('aria-hidden','true'); } });
+
+    // Respect reduced motion
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ document.documentElement.style.scrollBehavior = 'auto'; document.querySelectorAll('.animate').forEach(n=>n.style.animation='none'); }
+  </script>
+</body>
+</html>
